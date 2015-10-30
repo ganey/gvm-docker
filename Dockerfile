@@ -49,8 +49,6 @@ EXPOSE 8080
 #uncomment to add files by default
 #ADD . /var/www
 
-RUN service php-fpm stop
-
 # Fix dir perms
 RUN chown -Rf apache:apache /var/www
 
