@@ -10,7 +10,7 @@ RUN yum install -y python-meld3 http://dl.fedoraproject.org/pub/epel/6/i386/supe
 
 #install nginx, php
 RUN rpm -Uvh https://mirror.webtatic.com/yum/el6/latest.rpm
-RUN ["yum", "-y", "install", "nginx", "php56w", "php56w-common", "php56w-fpm", "php56w-mcrypt", "php56w-curl", "php56w-sqlite", "php56w-pdo", "php56w-devel", "php56w-gd", "php56w-pecl-memcached", "php56w-pecl-memcache", "php56w-pspell", "php56w-snmp", "php56w-xmlrpc", "php56w-xml"]
+RUN ["yum", "-y", "install", "nginx", "php56w", "php56w-common", "php56w-fpm", "php56w-mcrypt", "php56w-curl", "php56w-pdo", "php56w-devel", "php56w-gd", "php56w-pecl-memcached", "php56w-pecl-memcache", "php56w-pspell", "php56w-snmp", "php56w-xmlrpc", "php56w-xml"]
 
 # Create folder for server and add index.php file to for nginx
 RUN mkdir -p /var/www/public && chmod a+r /var/www/public && echo "<?php phpinfo(); ?>" > /var/www/public/index.php
@@ -35,10 +35,8 @@ ADD docker/mime.types /etc/nginx/mime.types
 # Install local memcached
 RUN yum install memcached -y
 
-# Start memcached
+# memcached
 ADD docker/memcached /etc/init.d/memcached
-RUN chkconfig --levels 235 memcached on
-RUN /usr/bin/memcached -d -s /var/run/memcached.sock -m 64 -c 1024 -u root
 
 # Setting health status for Google VM
 RUN mkdir /var/www/public/_ah
