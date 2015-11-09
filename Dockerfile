@@ -44,6 +44,10 @@ RUN cp -r /usr/share/www/_ah/* /var/www/public/_ah/
 
 EXPOSE 8080
 
+#selinux is already disabled
+#RUN setsebool -P httpd_enable_cgi=1
+#RUN setenforce 0
+
 #uncomment to add files by default
 #ADD . /var/www
 
@@ -53,5 +57,7 @@ RUN chown -Rf apache:apache /var/www
 # Executing supervisord
 CMD ["supervisord", "-n"]
 
-# run this docker
+# build based on current dir
+# sudo docker build -t=ganey/gvm-docker .
+# run docker by copying code into /var/www, public dir is /var/www/public
 # sudo docker run --name=gvm -v /e/websites/website-name:/var/www -p 8080:8080 ganey/gvm-docker
